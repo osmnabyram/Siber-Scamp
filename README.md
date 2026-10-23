@@ -1,112 +1,77 @@
-# Scamp.py
+<div align="center">
 
-A terminal-based Python tool developed for educational and laboratory purposes that accepts connections over TCP, captures keyboard inputs after an incoming connection, and forwards them to the remote host. The program operates with visual loading animation, ASCII banner display, and live listening indicator.
+# Scamp
 
-<img width="1187" height="745" alt="Screenshot 2026-01-07 234803" src="https://github.com/user-attachments/assets/faa71084-7d80-45b4-94d8-a6208a7a7da8" />
+### A teaching example of sockets and input monitoring, for closed lab use only.
+
+A small terminal program that listens on a TCP port and, once a client connects, streams locally captured keyboard events over that socket. It exists to demonstrate how socket servers and input listeners work — not to be deployed against anyone.
+
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![pynput](https://img.shields.io/badge/Library-pynput-3776AB?style=for-the-badge)
+![Scope](https://img.shields.io/badge/Scope-Lab%20%2F%20CTF%20only-e53935?style=for-the-badge)
+![Warning](https://img.shields.io/badge/Unauthorized%20use-illegal-121212?style=for-the-badge)
+
+</div>
+
+<div align="center">
+<img width="1187" alt="Scamp interface" src="https://github.com/user-attachments/assets/faa71084-7d80-45b4-94d8-a6208a7a7da8" />
+</div>
 
 ---
 
-## Overview
+> ### Read this first
+> Scamp captures keystrokes. Running software that records another person's keyboard without their informed consent is illegal in most countries and is a serious offence. This project is published **purely as a learning artifact** for socket programming and input-event handling, to be run only on machines you own, in an isolated lab, or in a CTF you are authorized to play. Do not deploy it against anyone else. The author accepts no liability for misuse.
 
-When Scamp.py is executed, it begins listening on the specified port. When a client connection arrives, it accepts the connection and captures keyboard inputs, forwarding them in real-time over the socket. The interface is entirely terminal-based.
+---
+
+## What it demonstrates
+
+Scamp is a single-file example that ties together three beginner-to-intermediate concepts:
+
+- A TCP socket **server** that binds a port and accepts a connection
+- A keyboard **listener** (via `pynput`) that turns key events into text
+- **Threading**, so a live status animation runs while the socket work happens
+
+When started, it clears the screen, prints an ASCII banner, binds the port, and shows a listening animation. When a client connects, it stops the animation and begins forwarding captured key events over the socket in real time. Everything is terminal-based.
 
 ---
 
 ## Features
 
-- Accept connections over TCP socket
-- Live port listening animation
-- ASCII banner display
-- Real-time keyboard input capture
-- Multi-threaded operation (animation + listening)
-- Secure exit with Ctrl+C
-- Error handling and clean shutdown
+| Feature | Detail |
+|---|---|
+| TCP socket server | `AF_INET` / `SOCK_STREAM`, accepts a single connection |
+| Live listening animation | Runs on its own thread while waiting |
+| ASCII banner | Shown on startup |
+| Key-event capture | `pynput.keyboard.Listener`; special keys (ENTER, BACKSPACE, …) are labelled |
+| Clean shutdown | Exits safely on Ctrl+C and on socket/thread errors |
 
 ---
 
 ## Requirements
 
 - Python 3.x
-- `pynput` library
+- `pynput`
 
-Installation:
 ```bash
 pip install pynput
 ```
 
-## Usage
+## Running it (in your own lab)
 
-To execute the tool:
 ```bash
 python3 Scamp.py
 ```
 
-## Default Settings
-
-- HOST: `0.0.0.0`
-- PORT: `8080`
-
----
-
-## Program Startup
-
-- System loading animation is displayed
-- ASCII banner is printed
-- Listening begins on the specified port
+| Setting | Default |
+|---|---|
+| HOST | `0.0.0.0` |
+| PORT | `8080` |
 
 ---
 
-## Workflow
+## Security notes
 
-- Terminal screen is cleared
-- Loading animation plays
-- ASCII banner is displayed
-- Socket is created and bound
-- Listening begins on the port
-- Live listening animation runs
-- Client connection is accepted
-- Listening animation stops
-- Keyboard input capture begins
-- Inputs are sent in real-time over the socket
-
----
-
-## Technical Details
-
-### Socket Structure
-
-- `AF_INET / SOCK_STREAM`
-- Single connection accepted
-- Remains continuously active after connection is established
-
----
-
-### Thread Usage
-
-- Listening animation runs on a separate thread
-- Main thread handles socket and keylogger operations
-
----
-
-### Keylogger Mechanism
-
-- `pynput.keyboard.Listener` is utilized
-- Normal characters are written directly
-- Special keys (ENTER, BACKSPACE, etc.) are labeled
-- Collected data is transmitted over the socket
-
----
-
-## Error and Exit Controls
-
-- Program safely closes with Ctrl+C
-- Program terminates on socket or thread errors
-- Error messages are displayed in the terminal
-
----
-
-## Security Notes
-
-- This tool is designed exclusively for **educational**, **laboratory**, and **CTF** environments
-- Execution on unauthorized systems or users is unethical and illegal
-- Data transmitted over the network is **not encrypted**
+- Traffic over the socket is **not encrypted** — this is a teaching example, not a secure channel.
+- Intended strictly for **educational, lab, and CTF** environments.
+- Use on systems or people without explicit authorization is unethical and illegal.
