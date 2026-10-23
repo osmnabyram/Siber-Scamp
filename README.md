@@ -19,6 +19,10 @@ A small terminal program that listens on a TCP port and, once a client connects,
 
 ---
 
+<div align="center">
+<img src="assets/how-it-works.svg" alt="How it works: an animated diagram of the tool's core flow." width="820" />
+</div>
+
 > ### Read this first
 > Scamp captures keystrokes. Running software that records another person's keyboard without their informed consent is illegal in most countries and is a serious offence. This project is published **purely as a learning artifact** for socket programming and input-event handling, to be run only on machines you own, in an isolated lab, or in a CTF you are authorized to play. Do not deploy it against anyone else. The author accepts no liability for misuse.
 
